@@ -1,24 +1,6 @@
 import logging
 import os
-
-DEBUG               = True
-API_URL_PREFIX      = "/api"
-HOST                = '0.0.0.0'
-PORT                = 5000
-FILE_STORAGE_PATH   = '/Users/kd/Workspace/python/face/data/input' #'/tmp/nginx'
-ENABLE_CORS         = True
-
-JWT_SECRET_KEY      = 'tarento@ai.com$'
-JWT_ACCESS_TOKEN_EXPIRY_IN_MINS     = 5
-JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS    = 30
-FACE_MATCHING_TOLERANCE             = 0.60000000
-
-DATABASE_SAVE       = False
-DATABASE_URI        = 'mongodb://localhost:27017'
-DATABASE_NAME       = 'tarento_ai'
-
-REDIS_HOSTNAME      = 'localhost'
-REDIS_PORT          = 6379
+from configs import development as dev_config
 
 logging.basicConfig(
     filename=os.getenv("SERVICE_LOG", "server.log"),
@@ -28,13 +10,19 @@ logging.basicConfig(
     datefmt="%d/%m/%y %H:%M:%S",
 )
 
-SUPPORTED_UPLOAD_FILETYPES = ['application/msword',
-'application/pdf',
-'image/x-ms-bmp',
-'image/jpeg',
-'image/jpg',
-'image/png',
-'text/plain',
-'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-'video/mp4',
-'video/webm']
+DEBUG                               = os.getenv("DEBUG", dev_config.DEBUG)
+API_URL_PREFIX                      = "/api"
+HOST                                = '0.0.0.0'
+PORT                                = os.getenv("PORT", dev_config.PORT)
+FILE_STORAGE_PATH                   = os.getenv("FILE_STORAGE_PATH", dev_config.FILE_STORAGE_PATH)
+ENABLE_CORS                         = os.getenv("ENABLE_CORS", dev_config.ENABLE_CORS)
+
+JWT_SECRET_KEY                      = os.getenv("JWT_SECRET_KEY", dev_config.JWT_SECRET_KEY)
+JWT_ACCESS_TOKEN_EXPIRY_IN_MINS     = os.getenv("JWT_ACCESS_TOKEN_EXPIRY_IN_MINS", dev_config.JWT_ACCESS_TOKEN_EXPIRY_IN_MINS)
+JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS    = os.getenv("JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS", dev_config.JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS)
+FACE_MATCHING_TOLERANCE             = os.getenv("FACE_MATCHING_TOLERANCE", dev_config.FACE_MATCHING_TOLERANCE)
+
+REDIS_HOSTNAME                      = os.getenv("REDIS_HOSTNAME", dev_config.REDIS_HOSTNAME)
+REDIS_PORT                          = os.getenv("REDIS_PORT", dev_config.REDIS_PORT)
+
+SUPPORTED_UPLOAD_FILETYPES          = os.getenv("SUPPORTED_UPLOAD_FILETYPES", dev_config.SUPPORTED_UPLOAD_FILETYPES)
