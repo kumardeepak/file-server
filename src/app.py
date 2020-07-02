@@ -1,4 +1,3 @@
-import redis
 from datetime import timedelta
 from flask import Flask, jsonify
 from flask.blueprints import Blueprint
@@ -8,7 +7,7 @@ from flask_jwt_extended import (
     jwt_refresh_token_required, get_jwt_identity, jwt_required, get_raw_jwt
 )
 
-import config
+import configs as config
 import routes
 import logging
 

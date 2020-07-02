@@ -3,7 +3,7 @@ from flask_jwt_extended import (jwt_required,create_access_token, create_refresh
 import werkzeug
 from flask import send_file
 import os
-import config
+import configs as config
 import logging
 import uuid
 import magic
