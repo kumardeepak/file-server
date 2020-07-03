@@ -1,7 +1,7 @@
 DEBUG               = True
 API_URL_PREFIX      = "/api"
-HOST                = '0.0.0.0'
-PORT                = 5000
+APP_HOST            = '0.0.0.0'
+APP_PORT            = 5000
 FILE_STORAGE_PATH   = '/Users/kd/Workspace/python/face/data/input' #'/tmp/nginx'
 ENABLE_CORS         = True
 

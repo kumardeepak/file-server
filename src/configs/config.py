@@ -22,11 +22,11 @@ class AppConfig:
 
     @staticmethod
     def get_host():
-        return os.getenv("DEBUG", dev_config.HOST)
+        return os.getenv("APP_HOST", dev_config.APP_HOST)
     
     @staticmethod
     def get_port():
-        return os.getenv("PORT", dev_config.PORT)
+        return os.getenv("APP_PORT", dev_config.APP_PORT)
 
     @staticmethod
     def get_file_storage_path():
