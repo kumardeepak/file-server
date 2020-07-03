@@ -11,21 +11,69 @@ logging.basicConfig(
     datefmt="%d/%m/%y %H:%M:%S",
 )
 
+# def config():
+#     print(dev_config)
+#     return {
+#         "DEBUG" : os.getenv("DEBUG", dev_config.DEBUG),
+#         "API_URL_PREFIX" : "/api",
+#         "HOST" : '0.0.0.0',
+#         "PORT" : os.getenv("PORT", dev_config.PORT),
+#         "FILE_STORAGE_PATH" : os.getenv("FILE_STORAGE_PATH", dev_config.FILE_STORAGE_PATH),
+#         "ENABLE_CORS" : os.getenv("ENABLE_CORS", dev_config.ENABLE_CORS),
+#         "JWT_SECRET_KEY" : os.getenv("JWT_SECRET_KEY", dev_config.JWT_SECRET_KEY),
+#         "JWT_ACCESS_TOKEN_EXPIRY_IN_MINS" : os.getenv("JWT_ACCESS_TOKEN_EXPIRY_IN_MINS", dev_config.JWT_ACCESS_TOKEN_EXPIRY_IN_MINS),
+#         "JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS" : os.getenv("JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS", dev_config.JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS),
+#         "FACE_MATCHING_TOLERANCE" : os.getenv("FACE_MATCHING_TOLERANCE", dev_config.FACE_MATCHING_TOLERANCE),
+#         "REDIS_HOSTNAME"   : os.getenv("REDIS_HOSTNAME", dev_config.REDIS_HOSTNAME),
+#         "REDIS_PORT" : os.getenv("REDIS_PORT", dev_config.REDIS_PORT),
+#         "SUPPORTED_UPLOAD_FILETYPES" : os.getenv("SUPPORTED_UPLOAD_FILETYPES", dev_config.SUPPORTED_UPLOAD_FILETYPES)
+#     }
 
+class AppConfig:
+    @staticmethod
+    def get_debug():
+        return os.getenv("DEBUG", dev_config.DEBUG)
+    
+    @staticmethod
+    def get_api_url_prefix():
+        return "/api"
 
-def config():
-    return {
-        "DEBUG" : os.getenv("DEBUG", dev_config.DEBUG),
-        "API_URL_PREFIX" : "/api",
-        "HOST" : '0.0.0.0',
-        "PORT" : os.getenv("PORT", dev_config.PORT),
-        "FILE_STORAGE_PATH" : os.getenv("FILE_STORAGE_PATH", dev_config.FILE_STORAGE_PATH),
-        "ENABLE_CORS" : os.getenv("ENABLE_CORS", dev_config.ENABLE_CORS),
-        "JWT_SECRET_KEY" : os.getenv("JWT_SECRET_KEY", dev_config.JWT_SECRET_KEY),
-        "JWT_ACCESS_TOKEN_EXPIRY_IN_MINS" : os.getenv("JWT_ACCESS_TOKEN_EXPIRY_IN_MINS", dev_config.JWT_ACCESS_TOKEN_EXPIRY_IN_MINS),
-        "JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS" : os.getenv("JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS", dev_config.JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS),
-        "FACE_MATCHING_TOLERANCE" : os.getenv("FACE_MATCHING_TOLERANCE", dev_config.FACE_MATCHING_TOLERANCE),
-        "REDIS_HOSTNAME"   : os.getenv("REDIS_HOSTNAME", dev_config.REDIS_HOSTNAME),
-        "REDIS_PORT" : os.getenv("REDIS_PORT", dev_config.REDIS_PORT),
-        "SUPPORTED_UPLOAD_FILETYPES" : os.getenv("SUPPORTED_UPLOAD_FILETYPES", dev_config.SUPPORTED_UPLOAD_FILETYPES),
-    }
+    @staticmethod
+    def get_host():
+        return os.getenv("DEBUG", dev_config.HOST)
+    
+    @staticmethod
+    def get_port():
+        return os.getenv("PORT", dev_config.PORT)
+
+    @staticmethod
+    def get_file_storage_path():
+        return os.getenv("FILE_STORAGE_PATH", dev_config.FILE_STORAGE_PATH)
+    
+    @staticmethod
+    def get_enable_cors():
+        return os.getenv("ENABLE_CORS", dev_config.ENABLE_CORS)
+
+    @staticmethod
+    def get_jwt_secret_key():
+        return os.getenv("JWT_SECRET_KEY", dev_config.JWT_SECRET_KEY)
+
+    @staticmethod
+    def get_jwt_access_token_expiry_in_mins():
+        return os.getenv("JWT_ACCESS_TOKEN_EXPIRY_IN_MINS", dev_config.JWT_ACCESS_TOKEN_EXPIRY_IN_MINS)
+
+    @staticmethod
+    def get_jwt_refresh_token_expiry_in_days():
+        return os.getenv("JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS", dev_config.JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS)
+
+    @staticmethod
+    def get_redis_hostname():
+        return os.getenv("REDIS_HOSTNAME", dev_config.REDIS_HOSTNAME)
+
+    @staticmethod
+    def get_redis_port():
+        return os.getenv("REDIS_PORT", dev_config.REDIS_PORT)
+
+    @staticmethod
+    def get_supported_upload_file_types():
+        return os.getenv("SUPPORTED_UPLOAD_FILETYPES", dev_config.SUPPORTED_UPLOAD_FILETYPES)

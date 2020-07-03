@@ -8,15 +8,17 @@ from flask_jwt_extended import (
     jwt_refresh_token_required, get_jwt_identity, jwt_required, get_raw_jwt
 )
 
-import configs as config
 import routes
 import logging
+import os
+from configs import AppConfig
+
 
 server                                          = Flask(__name__)
-server.config['JWT_SECRET_KEY']                 = config.JWT_SECRET_KEY
+server.config['JWT_SECRET_KEY']                 = AppConfig.get_jwt_secret_key()
 server.config['PROPAGATE_EXCEPTIONS']           = True
-server.config['JWT_ACCESS_TOKEN_EXPIRES']       = timedelta(minutes=config.JWT_ACCESS_TOKEN_EXPIRY_IN_MINS)
-server.config['JWT_REFRESH_TOKEN_EXPIRES']      = timedelta(days=config.JWT_REFRESH_TOKEN_EXPIRY_IN_DAYS)
+server.config['JWT_ACCESS_TOKEN_EXPIRES']       = timedelta(minutes=AppConfig.get_jwt_access_token_expiry_in_mins())
+server.config['JWT_REFRESH_TOKEN_EXPIRES']      = timedelta(days=AppConfig.get_jwt_refresh_token_expiry_in_days())
 server.config['JWT_BLACKLIST_ENABLED']          = True
 server.config['JWT_BLACKLIST_TOKEN_CHECKS']     = ['access', 'refresh']
 
@@ -35,7 +37,7 @@ def check_if_token_is_valid(decrypted_token):
     logging.debug('verifying token [%s] in redis-store' % (jti))
 
     try:
-        revoked_store   = redis.StrictRedis(host=config.REDIS_HOSTNAME, port=config.REDIS_PORT, db=0, decode_responses=True)
+        revoked_store   = redis.StrictRedis(host=AppConfig.get_redis_hostname(), port=AppConfig.get_redis_port(), db=0, decode_responses=True)
         entry           = revoked_store.get(jti)
         logging.debug('token found %r' % (entry))
 
@@ -48,19 +50,19 @@ def check_if_token_is_valid(decrypted_token):
     except Exception as e:
         logging.error('connection redis failed with :%s' % (e))
 
-if config.ENABLE_CORS:
+if AppConfig.get_enable_cors():
     cors    = CORS(server, resources={r"/api/*": {"origins": "*"}})
 
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
-        server.register_blueprint(blueprint, url_prefix=config.API_URL_PREFIX)
+        server.register_blueprint(blueprint, url_prefix=AppConfig.get_api_url_prefix())
 
 @server.route('/api/v1/info', methods=['GET'])
-@jwt_required
+# @jwt_required
 def protected():
     return jsonify({
         'message': 'Welcome to FileServer API version 1.0',
     }), 200
 
 if __name__ == "__main__":
-    server.run(host=config.HOST, port=config.PORT)
+    server.run(host=AppConfig.get_host(), port=AppConfig.get_port(), debug=AppConfig.get_debug())

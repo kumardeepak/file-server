@@ -3,23 +3,23 @@ from flask_jwt_extended import (jwt_required,create_access_token, create_refresh
 import werkzeug
 from flask import send_file
 import os
-import configs as config
 import logging
 import uuid
 import magic
+from configs import AppConfig
 
-ALLOWED_FILE_TYPES = config.SUPPORTED_UPLOAD_FILETYPES
-parser = reqparse.RequestParser(bundle_errors=True)
+ALLOWED_FILE_TYPES  = AppConfig.get_supported_upload_file_types()
+parser              = reqparse.RequestParser(bundle_errors=True)
 
 class FileUploadResource(Resource):
     @jwt_required
     def post(self):
-        parse = reqparse.RequestParser()
+        parse       = reqparse.RequestParser()
         parse.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files', help='File is required', required=True)
-        args = parse.parse_args()
-        f = args['file']
-        filename = str(uuid.uuid4())+'_'+f.filename
-        filepath = os.path.join(config.FILE_STORAGE_PATH, filename)
+        args        = parse.parse_args()
+        f           = args['file']
+        filename    = str(uuid.uuid4())+'_'+f.filename
+        filepath    = os.path.join(AppConfig.get_file_storage_path(), filename)
         f.save(filepath)
         with open(filepath, 'rb') as f:
             filetype = magic.from_buffer(f.read(), mime=True)
@@ -47,13 +47,13 @@ class FileUploadResource(Resource):
 
 class FileDownloadResource(Resource):
     def get(self):
-        parse = reqparse.RequestParser()
+        parse       = reqparse.RequestParser()
         parse.add_argument('filename', type=str, location='args', help='Filename is required', required=True)
-        args = parse.parse_args()
-        filename = args['filename']
-        filepath = os.path.join(config.FILE_STORAGE_PATH, filename)
+        args        = parse.parse_args()
+        filename    = args['filename']
+        filepath    = os.path.join(AppConfig.get_file_storage_path(), filename)
         if(os.path.exists(filepath)):
-            result = send_file(filepath, as_attachment=True)
+            result  = send_file(filepath, as_attachment=True)
             result.headers["x-suggested-filename"] = filename
             return result
         else:
