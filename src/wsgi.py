@@ -1,3 +1,3 @@
-from app import server as application
+from app import server as fs
 if __name__ == "__main__":
-    application.run()
+    fs.run()
