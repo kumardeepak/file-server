@@ -1,3 +1,4 @@
+import redis
 from datetime import timedelta
 from flask import Flask, jsonify
 from flask.blueprints import Blueprint
