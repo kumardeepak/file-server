@@ -58,7 +58,7 @@ for blueprint in vars(routes).values():
         server.register_blueprint(blueprint, url_prefix=AppConfig.get_api_url_prefix())
 
 @server.route('/api/v1/info', methods=['GET'])
-# @jwt_required
+@jwt_required
 def protected():
     return jsonify({
         'message': 'Welcome to FileServer API version 1.0',

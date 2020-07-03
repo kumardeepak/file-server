@@ -27,7 +27,7 @@ RUN apt-get install -y --fix-missing \
 
 COPY . /root/file-server
 RUN cd /root/file-server && \
-    pip3 install Flask-RESTful Flask bcrypt python-magic Flask-JWT-Extended redis flask_cors
+    pip3 install Flask-RESTful Flask bcrypt python-magic Flask-JWT-Extended redis flask_cors uwsgi
 EXPOSE 5000
 CMD cd /root/file-server && \
-    python src/app.py
+    uwsgi --ini deployment/uwsgi.ini 
